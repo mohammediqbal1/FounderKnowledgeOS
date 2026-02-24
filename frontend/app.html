@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Founder Knowledge OS — Local AI-Powered Personal Knowledge System" />
+    <title>Founder Knowledge OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --bg-card: #1a1f35;
+            --bg-input: #1e2440;
+            --border: #2a3155;
+            --border-glow: #6366f1;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --accent-glow: rgba(99, 102, 241, 0.3);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --gradient-1: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%);
+            --gradient-2: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+            --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .app-container {
+            position: relative;
+            z-index: 1;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .header .logo-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            background: var(--gradient-1);
+            border-radius: 16px;
+            margin-bottom: 20px;
+            font-size: 24px;
+            box-shadow: var(--shadow-glow);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            font-weight: 400;
+        }
+
+        /* Query Section */
+        .query-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            transition: border-color 0.3s ease;
+        }
+
+        .query-section:focus-within {
+            border-color: var(--border-glow);
+            box-shadow: var(--shadow), var(--shadow-glow);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .query-input {
+            flex: 1;
+            padding: 14px 18px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .query-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .query-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .submit-btn {
+            padding: 14px 28px;
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px var(--accent-glow);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .controls-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .domain-select {
+            padding: 10px 14px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .domain-select:focus {
+            border-color: var(--accent);
+        }
+
+        .ingest-btn {
+            margin-left: auto;
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .ingest-btn:hover {
+            border-color: var(--success);
+            color: var(--success);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .ingest-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .status-bar.visible {
+            display: flex;
+        }
+
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Answer Section */
+        .answer-section {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.4s ease;
+        }
+
+        .answer-section.visible {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .answer-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 14px;
+        }
+
+        .answer-text {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-primary);
+            white-space: pre-wrap;
+        }
+
+        /* Sources Section */
+        .sources-section {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.4s ease 0.1s both;
+        }
+
+        .sources-section.visible {
+            display: block;
+        }
+
+        .sources-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+
+        .source-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: var(--bg-input);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .source-item:hover {
+            background: var(--bg-secondary);
+        }
+
+        .source-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .source-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 8px;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .source-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .source-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .source-domain {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .domain-badge {
+            padding: 4px 10px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-hover);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 14px 22px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            color: white;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success { background: var(--success); }
+        .toast.error { background: var(--error); }
+        .toast.info { background: var(--accent); }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .app-container { padding: 24px 16px; }
+            .header h1 { font-size: 24px; }
+            .input-group { flex-direction: column; }
+            .controls-row { flex-wrap: wrap; }
+            .ingest-btn { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-icon">🧠</div>
+        <h1>Founder Knowledge OS</h1>
+        <p>Your private AI knowledge intelligence system</p>
+    </div>
+
+    <!-- Query Section -->
+    <div class="query-section">
+        <div class="input-group">
+            <input
+                type="text"
+                id="questionInput"
+                class="query-input"
+                placeholder="Ask anything from your knowledge base..."
+                autocomplete="off"
+            />
+            <button id="askBtn" class="submit-btn" onclick="askQuestion()">
+                Ask
+            </button>
+        </div>
+        <div class="controls-row">
+            <select id="domainFilter" class="domain-select">
+                <option value="">All Domains</option>
+                <option value="ELECTRICAL_CONTRACT">Electrical Contract</option>
+                <option value="SEMICONDUCTOR">Semiconductor</option>
+                <option value="AI_SYSTEM">AI System</option>
+                <option value="FINANCIAL">Financial</option>
+                <option value="GENERAL">General</option>
+            </select>
+            <button id="ingestBtn" class="ingest-btn" onclick="triggerIngest()">
+                📥 Ingest Documents
+            </button>
+        </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div id="statusBar" class="status-bar">
+        <div class="spinner"></div>
+        <span id="statusText">Processing...</span>
+    </div>
+
+    <!-- Answer Section -->
+    <div id="answerSection" class="answer-section">
+        <div class="answer-label">Answer</div>
+        <div id="answerText" class="answer-text"></div>
+    </div>
+
+    <!-- Sources Section -->
+    <div id="sourcesSection" class="sources-section">
+        <div class="sources-label">📎 Source Documents</div>
+        <div id="sourcesList"></div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<script>
+    const API_BASE = window.location.origin;
+
+    // Allow Enter key to submit
+    document.getElementById('questionInput').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            askQuestion();
+        }
+    });
+
+    function showStatus(text) {
+        const bar = document.getElementById('statusBar');
+        document.getElementById('statusText').textContent = text;
+        bar.classList.add('visible');
+    }
+
+    function hideStatus() {
+        document.getElementById('statusBar').classList.remove('visible');
+    }
+
+    function showToast(message, type = 'info') {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.className = `toast ${type}`;
+        requestAnimationFrame(() => toast.classList.add('show'));
+        setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    async function askQuestion() {
+        const question = document.getElementById('questionInput').value.trim();
+        if (!question) {
+            showToast('Please enter a question', 'error');
+            return;
+        }
+
+        const domainFilter = document.getElementById('domainFilter').value || null;
+        const askBtn = document.getElementById('askBtn');
+
+        askBtn.disabled = true;
+        showStatus('Searching knowledge base & generating answer...');
+
+        // Hide previous answer
+        document.getElementById('answerSection').classList.remove('visible');
+        document.getElementById('sourcesSection').classList.remove('visible');
+
+        try {
+            const response = await fetch(`${API_BASE}/query`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    question: question,
+                    domain_filter: domainFilter
+                }),
+            });
+
+            if (!response.ok) throw new Error(`Server error: ${response.status}`);
+
+            const data = await response.json();
+
+            // Display answer
+            document.getElementById('answerText').textContent = data.answer;
+            document.getElementById('answerSection').classList.add('visible');
+
+            // Display sources
+            if (data.sources && data.sources.length > 0) {
+                const sourcesList = document.getElementById('sourcesList');
+                sourcesList.innerHTML = data.sources.map(src => `
+                    <div class="source-item">
+                        <div class="source-icon">📄</div>
+                        <div class="source-info">
+                            <div class="source-name">${escapeHtml(src.document_name || 'Unknown')}</div>
+                            <div class="source-domain">${escapeHtml(src.domain || 'GENERAL')}</div>
+                        </div>
+                        <span class="domain-badge">${escapeHtml(src.domain || 'GENERAL')}</span>
+                    </div>
+                `).join('');
+                document.getElementById('sourcesSection').classList.add('visible');
+            }
+
+        } catch (err) {
+            showToast('Error: ' + err.message, 'error');
+        } finally {
+            askBtn.disabled = false;
+            hideStatus();
+        }
+    }
+
+    async function triggerIngest() {
+        const ingestBtn = document.getElementById('ingestBtn');
+        ingestBtn.disabled = true;
+        showStatus('Ingesting documents from knowledge folder...');
+
+        try {
+            const response = await fetch(`${API_BASE}/ingest`, {
+                method: 'POST',
+            });
+
+            if (!response.ok) throw new Error(`Server error: ${response.status}`);
+
+            const data = await response.json();
+            showToast(`✅ Ingested ${data.documents_processed} document(s)`, 'success');
+
+        } catch (err) {
+            showToast('Ingestion error: ' + err.message, 'error');
+        } finally {
+            ingestBtn.disabled = false;
+            hideStatus();
+        }
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+</script>
+
+</body>
+</html>

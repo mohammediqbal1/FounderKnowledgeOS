@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Founder Knowledge OS | Local Intelligence</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.4);
+            --bg: #030712;
+            --text-main: #f9fafb;
+            --text-dim: #9ca3af;
+            --glass-bg: rgba(17, 24, 39, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.02em;
+        }
+
+        /* Abstract Background */
+        .orb {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+            z-index: -1;
+            filter: blur(60px);
+            animation: moveOrb 20s infinite alternate;
+        }
+
+        .orb-1 {
+            top: -100px;
+            right: -100px;
+        }
+
+        .orb-2 {
+            bottom: -100px;
+            left: -100px;
+            opacity: 0.5;
+        }
+
+        @keyframes moveOrb {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(100px, 50px);
+            }
+        }
+
+        /* Navbar */
+        nav {
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            background: linear-gradient(to right, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hero Section */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+        }
+
+        .hero-badge {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            color: #818cf8;
+            backdrop-filter: blur(5px);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            max-width: 900px;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to bottom, #fff 30%, #9ca3af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 1.25rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .cta-container {
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .btn-primary {
+            background: #fff;
+            color: #000;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 10%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 2.5rem;
+            border-radius: 24px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(99, 102, 241, 0.5);
+            transform: translateY(-8px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: #818cf8;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-dim);
+            font-size: 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            padding: 4rem 10%;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        /* Scroll Animation Observer */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-desc {
+                font-size: 1.1rem;
+            }
+
+            header {
+                padding-top: 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <nav>
+        <div class="logo">
+            🧠 <span>FounderOS</span>
+        </div>
+        <div class="nav-links">
+            <!-- Optional links if needed -->
+        </div>
+    </nav>
+
+    <header>
+        <h1><span class="gradient-text">Your Knowledge,</span><br>Local & Intelligent</h1>
+        <p class="hero-desc">The ultimate Personal Knowledge OS for founders. Ingest PDFs, search semantically, and chat
+            with your private documents entirely offline.</p>
+        <div class="cta-container">
+            <a href="/app" class="btn-primary">
+                Launch Intelligence OS
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                    <link href="app.html">
+                    </link>
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <section class="features">
+        <div class="feature-card reveal">
+            <div class="feature-icon">🛡️</div>
+            <h3>Privacy First</h3>
+            <p>Your sensitive tender data and internal notes never leave your machine. Fully local vector storage with
+                ChromaDB.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon">🔍</div>
+            <h3>Semantic Recall</h3>
+            <p>Go beyond keyword search. Find exactly what you need based on meaning, context, and intent across
+                hundreds of documents.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon">⚡</div>
+            <h3>RAG Intelligence</h3>
+            <p>Retrieval-Augmented Generation helps you synthesize answers derived directly from your own knowledge
+                base.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon">📦</div>
+            <h3>Offline Ready</h3>
+            <p>Designed for speed and reliability. No reliance on external cloud services for your core knowledge
+                processing.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon">🏷️</div>
+            <h3>Auto Domain Analysis</h3>
+            <p>Intelligent classification of documents into Electrical, Semiconductor, Financial, and more using local
+                LLM power.</p>
+        </div>
+        <div class="feature-card reveal">
+            <div class="feature-icon">🚀</div>
+            <h3>Founder Grade</h3>
+            <p>Minimalist, high-performance interface designed for single founders who need information at the speed of
+                thought.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Founder Knowledge OS. Built for Founders by Founders.</p>
+    </footer>
+
+    <script>
+        // Simple Scroll Reveal Logic
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", reveal);
+        // Initial check on load
+        reveal();
+    </script>
+</body>
+
+</html>

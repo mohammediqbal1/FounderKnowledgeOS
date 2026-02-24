@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+
+# Project Specific
+.env
+chroma_db/
+data/knowledge_docs/
+!data/knowledge_docs/.gitkeep
+
+# AI Agent metadata
+.gemini/
+brain/
+task.md
+implementation_plan.md
+walkthrough.md
+
+# OS
+.DS_Store
+Thumbs.db
