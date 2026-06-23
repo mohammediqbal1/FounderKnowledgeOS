@@ -45,27 +45,32 @@ Founder_Knowledge_OS/
 
 ---
 
-📥 Getting Started
+🛠️ Getting Started
 
-1. Clone the repository
+1. Prerequisites
 
-git clone https://github.com/mohammediqbal1/FintechRiskAgent.git
-cd FintechRiskAgent/fintech-risk-agent
 
-2. Create a Python virtual environment
+Python 3.10+
+A Google Gemini API Key
 
-python -m venv venv
-source venv/bin/activate        # Linux / macOS
-venv\Scripts\activate           # Windows
 
-3. Install dependencies
+2. Installation
 
+Clone the repository and install dependencies:
+
+git clone https://github.com/mohammediqbal1/FounderKnowledgeOS.git
+cd FounderKnowledgeOS
 pip install -r requirements.txt
 
-🧪 Example Output
+3. Configuration
 
-→ Inspecting dataset...
-→ Model trained and saved
-→ Evaluation: accuracy 0.9566
-→ Explanation generated for risk decision
-→ Agent workflow completed
+Create a .env file in the root directory:
+
+GEMINI_API_KEY=your_gemini_api_key_here
+
+4. Run the Application
+
+Start the backend server:
+
+cd backend
+python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
