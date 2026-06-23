@@ -45,57 +45,27 @@ Founder_Knowledge_OS/
 
 ---
 
-## 🛠️ Getting Started
+📥 Getting Started
 
-### 1. Prerequisites
-- Python 3.10+
-- A Google Gemini API Key
+1. Clone the repository
 
-### 2. Installation
-Clone the repository and install dependencies:
-```bash
-git clone https://github.com/mohammediqbal1/pytube.git
-cd Founder_Knowledge_OS
+git clone https://github.com/mohammediqbal1/FintechRiskAgent.git
+cd FintechRiskAgent/fintech-risk-agent
+
+2. Create a Python virtual environment
+
+python -m venv venv
+source venv/bin/activate        # Linux / macOS
+venv\Scripts\activate           # Windows
+
+3. Install dependencies
+
 pip install -r requirements.txt
-```
 
-### 3. Configuration
-Create a `.env` file in the root directory:
-```env
-GEMINI_API_KEY=your_gemini_api_key_here
-```
+🧪 Example Output
 
-### 4. Run the Application
-Start the backend server:
-```bash
-cd backend
-python -m uvicorn main.py:app --reload --host 0.0.0.0 --port 8000
-```
-
----
-
-## 📖 How to Use
-
-1.  **Ingest Data**: Drop your PDF documents into `data/knowledge_docs/`.
-2.  **Launch Dashboard**: Navigate to `http://localhost:8000`.
-3.  **Process Documents**: Click **📥 Ingest Documents** to index your library.
-4.  **Ask Questions**: Use the chat interface to query your specialized knowledge base.
-
----
-
-## 🛠️ Tech Stack
-
-- **Backend**: Python, FastAPI, Uvicorn
-- **PDF Engine**: PyMuPDF (fitz)
-- **Vector DB**: ChromaDB
-- **Embeddings**: Sentence-Transformers (`all-MiniLM-L6-v2`)
-- **LLM**: Google Gemini 2.0 Flash
-- **Frontend**: Vanilla HTML5, CSS3 (Glassmorphism), JavaScript
-
----
-
-## 🛡️ Security Note
-The system is configured via `.gitignore` to **NEVER** push your `data/` folder, `chroma_db/`, or `.env` file to GitHub. Your internal notes and sensitive keys remain strictly on your local machine.
-
----
-Built with ❤️ for Founders.
+→ Inspecting dataset...
+→ Model trained and saved
+→ Evaluation: accuracy 0.9566
+→ Explanation generated for risk decision
+→ Agent workflow completed
